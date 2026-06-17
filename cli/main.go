@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"quantumscript/engine"
+	"quantumscript/lsp"
 )
 
 func main() {
@@ -84,6 +85,42 @@ superpose(sharedQubit);
 				fmt.Printf("Qubit [%s] -> |1⟩: %.1f%% |0⟩: %.1f%%\n", name, p1, p0)
 			}
 		}()
+	case "export-qasm":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: qs export-qasm <file.qts>")
+			return
+		}
+		filename := os.Args[2]
+		src, err := os.ReadFile(filename)
+		if err != nil {
+			fmt.Printf("Error reading %s: %v\n", filename, err)
+			os.Exit(1)
+		}
+
+		loader := func(moduleName string) (string, error) {
+			dir := filepath.Dir(filename)
+			modPath := filepath.Join(dir, moduleName)
+			b, err := os.ReadFile(modPath)
+			return string(b), err
+		}
+
+		func() {
+			defer func() {
+				if r := recover(); r != nil {
+					fmt.Println(r)
+					os.Exit(1)
+				}
+			}()
+			
+			qasm := engine.ExportQASM(string(src), filename, loader)
+			
+			outFilename := filename + ".qasm"
+			os.WriteFile(outFilename, []byte(qasm), 0644)
+			fmt.Printf("Successfully exported OpenQASM to %s\n", outFilename)
+			fmt.Println("\n" + qasm)
+		}()
+	case "lsp":
+		lsp.StartServer()
 	default:
 		printUsage()
 	}
@@ -93,6 +130,8 @@ func printUsage() {
 	fmt.Println("QuantumScript CLI")
 	fmt.Println("Usage:")
 	fmt.Println("  qs init <project>   Initialize a new project")
-	fmt.Println("  qs run <file.qts>   Execute a QuantumScript file")
-	fmt.Println("  qs version          Show compiler version")
+	fmt.Println("  qs run <file.qts>         Execute a QuantumScript file")
+	fmt.Println("  qs export-qasm <file.qts> Export to OpenQASM 2.0")
+	fmt.Println("  qs lsp                    Start the Language Server")
+	fmt.Println("  qs version                Show compiler version")
 }

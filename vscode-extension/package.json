@@ -10,12 +10,24 @@
   "categories": [
     "Programming Languages"
   ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:quantumscript"
+  ],
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
   "contributes": {
     "languages": [
       {
         "id": "quantumscript",
-        "aliases": ["QuantumScript", "quantumscript"],
-        "extensions": [".qts"],
+        "aliases": [
+          "QuantumScript",
+          "quantumscript"
+        ],
+        "extensions": [
+          ".qts"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
