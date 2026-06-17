@@ -557,8 +557,8 @@ func (p *Parser) parseExpression(precedence int) Expression {
 					call.Args = append(call.Args, p.parseExpression(LOWEST))
 					if p.peekToken.Type == COMMA { p.nextToken(); p.nextToken() } else { break }
 				}
+				p.expectPeek(RPAREN)
 			}
-			p.expectPeek(RPAREN)
 			left = call
 		case LBRACKET:
 			p.nextToken()

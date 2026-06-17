@@ -12,6 +12,10 @@ func evaluateQuantumScript(this js.Value, p []js.Value) interface{} {
 	}
 	src := p[0].String()
 	
+	noiseLevel := 0.0
+	if len(p) > 1 && p[1].Type() == js.TypeNumber {
+		noiseLevel = p[1].Float()
+	}
 	loader := func(moduleName string) (string, error) {
 		return "", fmt.Errorf("module loading not fully supported in simple WASM demo: %s", moduleName)
 	}
@@ -24,7 +28,7 @@ func evaluateQuantumScript(this js.Value, p []js.Value) interface{} {
 			}
 		}()
 		
-		results := engine.Run(src, "browser.qs", loader)
+		results := engine.Run(src, "browser.qs", loader, noiseLevel)
 
 		output += "QuantumScript Simulator Results (1000 Shots):\n"
 		for name, counts := range results {

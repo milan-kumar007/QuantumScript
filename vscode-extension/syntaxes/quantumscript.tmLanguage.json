@@ -34,7 +34,7 @@
       "patterns": [
         {
           "name": "keyword.control.qts",
-          "match": "\\b(const|boolean|qubit|number|new|true|false|import|from|export|if|for|while|let|function|return)\\b"
+          "match": "\\b(const|boolean|qubit|number|string|object|new|true|false|import|from|export|if|for|while|let|function|return|adjoint)\\b"
         }
       ]
     },
@@ -42,7 +42,7 @@
       "patterns": [
         {
           "name": "support.type.qts",
-          "match": "\\b(qubit|boolean)\\b"
+          "match": "\\b(qubit|boolean|number|string|object|Qubit)\\b"
         }
       ]
     },
@@ -67,7 +67,7 @@
       "patterns": [
         {
           "name": "entity.name.function.qts",
-          "match": "\\b(superpose|invert|measure|X|Y|Z|S|T|Rx|Ry|Rz)\\b"
+          "match": "\\b(superpose|invert|measure|X|Y|Z|S|T|Rx|Ry|Rz|StatePrep|Math|PI|sin|cos|sqrt|pow|abs)\\b"
         }
       ]
     }
