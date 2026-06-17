@@ -28,7 +28,7 @@ func evaluateQuantumScript(this js.Value, p []js.Value) interface{} {
 			}
 		}()
 		
-		results := engine.Run(src, "browser.qs", loader, noiseLevel)
+		results := engine.Run(src, "browser.qts", loader, noiseLevel)
 
 		output += "QuantumScript Simulator Results (1000 Shots):\n"
 		for name, counts := range results {

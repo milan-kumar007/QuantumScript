@@ -4,7 +4,7 @@ QuantumScript is a strict, natively compiled programming language that simulates
 
 ## 🚀 The Terminal Experience
 
-You can install QuantumScript globally on your machine to seamlessly compile and run `.qs` files.
+You can install QuantumScript globally on your machine to seamlessly compile and run `.qts` files.
 
 ### Installation (Windows)
 Run the PowerShell installer:
@@ -23,7 +23,7 @@ qs init my-quantum-app
 cd my-quantum-app
 
 # Run the 1,000-shot hardware simulator
-qs run main.qs
+qs run main.qts
 ```
 
 ## 🌐 The Browser Experience (Quantum Websites)
@@ -50,4 +50,4 @@ When you open the webpage, the QuantumScript will execute instantly and output t
 ## Language Features
 - **Strict Typing**: The compiler statically analyzes your code. If you try to pass a classical `boolean` into a quantum gate, the compiler will instantly reject it.
 - **Entanglement (`if`)**: Placing a qubit inside an `if` statement automatically treats the block as a Quantum Controlled-NOT operation, allowing perfect entanglement.
-- **Modularity**: Share precise wave-functions across multiple files using `export const q: qubit` and `import { q } from "file.qs"`.
+- **Modularity**: Share precise wave-functions across multiple files using `export const q: qubit` and `import { q } from "file.qts"`.

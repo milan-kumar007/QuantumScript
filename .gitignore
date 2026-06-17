@@ -34,9 +34,9 @@ go.work
 fix_*.go
 refactor*.go
 update_panics.go
-stage*_test.qs
+stage*_test.qts
 test_*.qts
 
 # Sample qs files (Optional: remove these from gitignore if you want to ship them as examples)
-# app.qs
-# module.qs
+# app.qts
+# module.qts
