@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"quantumscript/engine"
 	"quantumscript/lsp"
 )
@@ -18,7 +19,7 @@ func main() {
 
 	switch command {
 	case "version":
-		fmt.Println("QuantumScript Compiler v1.0.0")
+		fmt.Println("QuantumScript Compiler v4.0.0")
 	case "init":
 		if len(os.Args) < 3 {
 			fmt.Println("Usage: qs init <project-name>")
@@ -47,10 +48,26 @@ superpose(sharedQubit);
 		fmt.Printf("Run 'cd %s' and 'qs run main.qts' to see it in action.\n", projectName)
 	case "run":
 		if len(os.Args) < 3 {
-			fmt.Println("Usage: qs run <file.qts>")
+			fmt.Println("Usage: qs run [--noise=0.01] <file.qts>")
 			return
 		}
-		filename := os.Args[2]
+		
+		noiseLevel := 0.0
+		var filename string
+		for _, arg := range os.Args[2:] {
+			if strings.HasPrefix(arg, "--noise=") {
+				noiseStr := strings.TrimPrefix(arg, "--noise=")
+				fmt.Sscanf(noiseStr, "%f", &noiseLevel)
+			} else {
+				filename = arg
+			}
+		}
+		
+		if filename == "" {
+			fmt.Println("Usage: qs run [--noise=0.01] <file.qts>")
+			return
+		}
+		
 		src, err := os.ReadFile(filename)
 		if err != nil {
 			fmt.Printf("Error reading %s: %v\n", filename, err)
@@ -72,7 +89,7 @@ superpose(sharedQubit);
 				}
 			}()
 			
-			results := engine.Run(string(src), filename, loader)
+			results := engine.Run(string(src), filename, loader, noiseLevel)
 
 			fmt.Println("QuantumScript Simulator Results (1000 Shots):")
 			for name, counts := range results {
@@ -87,10 +104,25 @@ superpose(sharedQubit);
 		}()
 	case "export-qasm":
 		if len(os.Args) < 3 {
-			fmt.Println("Usage: qs export-qasm <file.qts>")
+			fmt.Println("Usage: qs export-qasm [--topology=linear] <file.qts>")
 			return
 		}
-		filename := os.Args[2]
+		
+		topology := ""
+		var filename string
+		for _, arg := range os.Args[2:] {
+			if strings.HasPrefix(arg, "--topology=") {
+				topology = strings.TrimPrefix(arg, "--topology=")
+			} else {
+				filename = arg
+			}
+		}
+		
+		if filename == "" {
+			fmt.Println("Usage: qs export-qasm [--topology=linear] <file.qts>")
+			return
+		}
+		
 		src, err := os.ReadFile(filename)
 		if err != nil {
 			fmt.Printf("Error reading %s: %v\n", filename, err)
@@ -112,7 +144,7 @@ superpose(sharedQubit);
 				}
 			}()
 			
-			qasm := engine.ExportQASM(string(src), filename, loader)
+			qasm := engine.ExportQASM(string(src), filename, loader, topology)
 			
 			outFilename := filename + ".qasm"
 			os.WriteFile(outFilename, []byte(qasm), 0644)
@@ -130,8 +162,8 @@ func printUsage() {
 	fmt.Println("QuantumScript CLI")
 	fmt.Println("Usage:")
 	fmt.Println("  qs init <project>   Initialize a new project")
-	fmt.Println("  qs run <file.qts>         Execute a QuantumScript file")
-	fmt.Println("  qs export-qasm <file.qts> Export to OpenQASM 2.0")
+	fmt.Println("  qs run [--noise=0.01] <file.qts>         Execute a QuantumScript file")
+	fmt.Println("  qs export-qasm [--topology=linear] <file.qts> Export to OpenQASM 3.0")
 	fmt.Println("  qs lsp                    Start the Language Server")
 	fmt.Println("  qs version                Show compiler version")
 }

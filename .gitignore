@@ -8,6 +8,7 @@ public/qs.wasm
 
 # VS Code Extension Packages
 vscode-extension/*.vsix
+vscode-extension/node_modules/
 
 # Temporary / Generated Test Projects
 my-new-app/
@@ -24,6 +25,17 @@ go.work
 .idea/
 *.swp
 *.swo
+
+# Generated Outputs
+*.qasm
+
+# AI Scratch / Patch Scripts
+*.py
+fix_*.go
+refactor*.go
+update_panics.go
+stage*_test.qs
+test_*.qts
 
 # Sample qs files (Optional: remove these from gitignore if you want to ship them as examples)
 # app.qs

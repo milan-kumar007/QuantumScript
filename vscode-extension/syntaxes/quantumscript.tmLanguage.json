@@ -34,7 +34,7 @@
       "patterns": [
         {
           "name": "keyword.control.qts",
-          "match": "\\b(if|import|from|export|const|new)\\b"
+          "match": "\\b(const|boolean|qubit|number|new|true|false|import|from|export|if|for|while|let|function|return)\\b"
         }
       ]
     },
@@ -67,7 +67,7 @@
       "patterns": [
         {
           "name": "entity.name.function.qts",
-          "match": "\\b(superpose|invert|measure)\\b"
+          "match": "\\b(superpose|invert|measure|X|Y|Z|S|T|Rx|Ry|Rz)\\b"
         }
       ]
     }
