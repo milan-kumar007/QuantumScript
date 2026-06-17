@@ -1,0 +1,30 @@
+# Compiled Go Binaries
+qs.exe
+qs
+*.exe
+
+# Compiled WebAssembly
+public/qs.wasm
+
+# VS Code Extension Packages
+vscode-extension/*.vsix
+
+# Temporary / Generated Test Projects
+my-new-app/
+test_project/
+test_qts/
+
+# Go workspaces/vendor
+vendor/
+go.work
+
+# OS / Editor Files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sample qs files (Optional: remove these from gitignore if you want to ship them as examples)
+# app.qs
+# module.qs

@@ -1,0 +1,30 @@
+{
+  "name": "quantumscript",
+  "displayName": "QuantumScript",
+  "description": "Syntax highlighting and language support for QuantumScript (.qts)",
+  "version": "1.0.0",
+  "publisher": "quantumscript",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "quantumscript",
+        "aliases": ["QuantumScript", "quantumscript"],
+        "extensions": [".qts"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "quantumscript",
+        "scopeName": "source.qts",
+        "path": "./syntaxes/quantumscript.tmLanguage.json"
+      }
+    ]
+  }
+}
